@@ -1,0 +1,26 @@
+# this is an auto generated file. This will be overwritten
+query GetRank($id: ID!) {
+  getRank(id: $id) {
+    id
+    name
+    description
+    createdAt
+    updatedAt
+  }
+}
+query ListRanks(
+  $filter: ModelRankFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRanks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}

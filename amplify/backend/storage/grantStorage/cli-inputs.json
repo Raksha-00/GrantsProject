@@ -1,0 +1,10 @@
+{
+  "resourceName": "grantStorage",
+  "tableName": "grantTable",
+  "partitionKey": {
+    "fieldName": "ID",
+    "fieldType": "number"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

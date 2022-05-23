@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "grantprojectapp",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\Users\\Raksha\\grant-project-app\\amplify\\backend\\api\\grantprojectapp\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2023-04-21T14:17:47.007Z",
+      "keyDescription": ""
+    }
+  }
+}
