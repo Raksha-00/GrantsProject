@@ -67,7 +67,7 @@ def list_grant():
     # contents = http.request('GET', url)
     try:
         print('loading model')
-        model.load_model('/mnt/4A6160EF59C5DCB2/grantsProject/grants-flask-1.2/BioSentVec_PubMed_MIMICIII-bigram_d700_2.bin')
+        model.load_model('./BioSentVec_PubMed_MIMICIII-bigram_d700_2.bin')
         # model.load_model(contents.data)
     except Exception as e:
         print(e)
