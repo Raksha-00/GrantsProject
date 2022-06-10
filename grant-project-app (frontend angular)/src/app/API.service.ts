@@ -14,8 +14,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ConfigService {
   //public baseURL: string = "https://grants-container.mamuh9kaqaore.ca-central-1.cs.amazonlightsail.com/";
-  //public baseURL: string = "http://localhost:8080/";
-  public baseURL: string = "http://99.79.52.238:8080/";
+  public baseURL: string = "http://localhost:8080/";
+  //public baseURL: string = "http://99.79.52.238:8080/";
   //public baseURL: string = "http://10.246.64.90:8080/";
   constructor(private http: HttpClient) { }
 
@@ -24,6 +24,14 @@ export class ConfigService {
     const headers = {'content-type': 'application/json'};
     const body = JSON.stringify({'searchSentence':temp});
     return this.http.post(this.baseURL+'getgrants',body,{'headers':headers});
+  }
+
+  getInfo(temp: any)
+  {
+    const headers = {'content-type': 'application/json'};
+    const body = JSON.stringify(temp);
+    console.log(body)
+    return this.http.post(this.baseURL+'piinfo',body,{'headers':headers});
   }
 
 }

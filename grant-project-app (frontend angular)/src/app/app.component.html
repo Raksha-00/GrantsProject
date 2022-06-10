@@ -8,6 +8,7 @@ html { background-color: #1976d2;
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
 
+
 <!--  margin-left:auto;-->
 <!--  margin-right:auto;-->
 }
@@ -18,12 +19,12 @@ html { background-color: #1976d2;
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
-
+  white-space: initial;
 }
 
-#grants tr{
+/*#grants tr{
   width: 50%;
-}
+}*/
 
 #grants tr:nth-child(even){background-color: #f2f2f2;}
 
@@ -32,9 +33,12 @@ html { background-color: #1976d2;
 #grants th {
   padding-top: 12px;
   padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
   text-align: center;
   background-color: #047D95;
   color: white;
+
 }
 
 
@@ -358,6 +362,29 @@ html { background-color: #1976d2;
 
 <!--Authentication-->
 <amplify-authenticator style="justify-content:center;">
+  <ng-template amplifySlot="sign-up-form-fields">
+
+        <amplify-text-field style="margin-bottom:0px;"
+            id="fname"
+            autocomplete="false"
+            placeholder="First Name"
+            name="custom:FirstName"
+            type="text">
+        </amplify-text-field>
+
+        <amplify-text-field style="margin-top:0px;"
+            id="lname"
+            autocomplete="false"
+            placeholder="Last Name"
+            name="custom:LastName"
+            type="text">
+        </amplify-text-field>
+
+        <amplify-sign-up-form-fields></amplify-sign-up-form-fields>
+
+
+
+    </ng-template>
   <ng-template
     amplifySlot="authenticated"
     let-user="user"
@@ -382,8 +409,8 @@ html { background-color: #1976d2;
           <span>Search Grants</span>
         </button>
 
-        <button class="card" (click)="selection.value = 'option2'" tabindex="0">
-          <span>Option2</span>
+        <button class="card" (click)="selection.value = 'showpiinfo'" tabindex="0">
+          <span>User information and ranking</span>
         </button>
       </div>
       <div [ngSwitch]="selection.value">
@@ -394,17 +421,75 @@ html { background-color: #1976d2;
             <button type="submit">Search</button>
           </form>
           <div *ngIf="records.length > 0">
+                <h2>Relevent grants : </h2>
+              <table id="grants" style="table-layout:fixed;width:1600px;float:left;">
 
-              <table id="grants" >
                 <thead>
                   <tr>
-                    <th style="width:1120px;">Opportunity Title </th>
-                    <th style="width:50px;">Opportunity Number </th>
-                    <th style="width:50px;">Distance </th>
+                    <th>Opportunity Title </th>
+                    <th style="width:300px;">Opportunity Number </th>
+                    <th style="width:300px;">Distance </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let d of records;let i = index;">
+                    <td style="width:1000px;"> <span>{{d.A}}</span> </td>
+                    <td> <span>{{d.B}}</span> </td>
+                    <td> <span>{{d.C}}</span> </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+        </pre>
+
+        <pre *ngSwitchCase="'showpiinfo'">
+          <form #searchh = "ngForm" (ngSubmit)="getPIInfo()">
+            <input type="text" [(ngModel)]="summary" name="ss" NgModel>
+            <br>
+            <button type="submit">Show</button>
+          </form>
+          <div *ngIf="pi_records.length > 0">
+            <h2>USER INFORMATION</h2>
+                <p>First Name : {{dict.First_Name}}</p>
+                <p>Last Name : {{dict.Last_Name}}</p>
+                <p>PI ID : {{pi_id}}</p>
+              <h3>Information about previous grants: </h3>
+              <table id="grants" style="table-layout:fixed;width:1600px;float:left;margin-botton:10px;">
+                <thead>
+                  <tr>
+                    <th style="width:50px;"> Participating Organization </th>
+                    <th style="width:50px;"> Funding Opportunity </th>
+                    <th style="width:50px;"> FOA </th>
+                    <th style="width:300px;"> Description </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let d of pi_records;let i = index;">
+                    <td> <span>{{d.PO}}</span> </td>
+                    <td> <span>{{d.FO}}</span> </td>
+                    <td> <span>{{d.FOA}}</span> </td>
+                    <td> <span>{{d.D}}</span> </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+            <div *ngIf="ranking_records.length > 0" style="margin-top:30px;">
+
+            <br/><br/><br/><hr/>
+              <h2>Ranking of grants based on user information: </h2>
+              <table id="grants" style="table-layout:fixed;width:1600px;float:left;">
+                <thead>
+                  <tr>
+                    <th style="width:1000px;">Opportunity Title </th>
+                    <th style="width:300px;">Opportunity Number </th>
+                    <th style="width:300px;">Distance </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let d of ranking_records;let i = index;">
                     <td> <span>{{d.A}}</span> </td>
                     <td> <span>{{d.B}}</span> </td>
                     <td> <span>{{d.C}}</span> </td>
@@ -413,38 +498,10 @@ html { background-color: #1976d2;
               </table>
 
             </div>
-          <!--
-            <div ng-app="myApp" ng-controller="formCtrl">
-                  <form novalidate>
-                    <input type="text" ng-model="user.lastName">
-                    <br>
-                    <button ng-click="getData()">Search</button>
-                  </form>
-            </div>
-            -->
-          <!--
-            <div *ngIf="records.length > 0">
-              <table class="minimalistBlack" >
-                <thead>
-                  <tr>
-                    <th>A </th>
-                    <th>B </th>
-                    <th>C </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let record of records;let i = index;">
-                    <td> <span>{{record.A}}</span> </td>
-                    <td> <span>{{record.B}}</span> </td>
-                    <td> <span>{{record.C}}</span> </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            -->
-        </pre>
-        <pre *ngSwitchCase="'option2'">
-          InProgress
+
+
+
+
         </pre>
       </div>
 </div>
